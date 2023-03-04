@@ -10,10 +10,16 @@ public class TopicConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TopicConsumer.class);
 
+    private String payload;
+
     @KafkaListener(topics = "${topic_name}")
     public void consume(String msg){
 
+        this.payload = msg;
         LOGGER.info(String.format("Message received --> %s", msg));
     }
 
+    public String getPayload() {
+        return payload;
+    }
 }

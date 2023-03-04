@@ -17,8 +17,8 @@ public class Producer {
         this.template = template;
     }
 
-    public void sendMessage(String msg){
+    public void sendMessage(String topicName, String msg){
         LOGGER.info(String.format("Message sent %s", msg));
-        template.send(topic_name, msg);
+        template.send(topicName, msg);
     }
 }
