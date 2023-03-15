@@ -1,22 +1,28 @@
 package com.kafka.poc.config;
 
-import org.apache.kafka.clients.admin.NewTopic;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.kafka.clients.admin.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.config.TopicBuilder;
+
+import java.util.Properties;
 
 @Configuration
-public class KafkaTopicConfig {
+public class KafkaAdminUtil {
 
-    @Value("${topic-name}")
-    private String topic_name;
     @Bean
-    public NewTopic topicCreator(){
+    public AdminClient KafkaAdminBean(){
+        Properties properties = new Properties();
+        Properties props = new Properties();
+        props.put("bootstrap.servers", "localhost:9092");
+        props.put("security.protocol", "PLAINTEXT");
+        props.put("sasl.mechanism", "PLAINTEXT");
+        props.put("sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username='myuser' password='mypassword';");
 
-        return TopicBuilder.name(topic_name)
-                .partitions(5)
-                .build();
+        properties.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+
+        AdminClient adminClient = AdminClient.create(props);
+        return adminClient;
     }
+
 }
 

@@ -22,4 +22,6 @@ public class TopicConsumer {
     public String getPayload() {
         return payload;
     }
+
+
 }
